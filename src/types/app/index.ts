@@ -22,7 +22,7 @@ export interface ChartData {
   value: number | number[];
   label: string;
   description?: string;
-  data?: any;
+  data?: Array<number | string> | Record<string, number | string>;
 }
 
 export type ChartType = "line" | "bar" | "pie" | "area" | "metric";
@@ -32,5 +32,5 @@ export interface DashboardMetric {
   value: string;
   change: string;
   trend: "up" | "down";
-  data?: number[];
+  data?: Array<number | string> | Record<string, number | string>;
 }

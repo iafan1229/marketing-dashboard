@@ -2,7 +2,6 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { UserProfile } from "./UserProfile";
-import { Button } from "./Button";
 import Link from "next/link";
 
 export function Header() {
@@ -21,13 +20,7 @@ export function Header() {
               user={session.user}
               onSignOut={() => signOut({ callbackUrl: "/" })}
             />
-          ) : (
-            <Link href='/login'>
-              <Button variant='outline' size='sm'>
-                로그인
-              </Button>
-            </Link>
-          )}
+          ) : null}
         </div>
       </div>
     </header>
