@@ -1,3 +1,10 @@
+export interface User {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
 export interface Chat {
   id: string;
   name: string;
@@ -6,12 +13,6 @@ export interface Chat {
   created: string;
   lastModified: string;
   isOwn?: boolean;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  avatar?: string;
 }
 
 export interface ChartData {
