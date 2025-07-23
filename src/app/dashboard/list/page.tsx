@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "@/components/ui/Pagination";
 
@@ -11,7 +11,15 @@ interface ListItem {
   updatedAt: string;
 }
 
-const DashboardListPage: React.FC = () => {
+export default function DashboardListPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ListContainerInner />
+    </Suspense>
+  );
+}
+
+const ListContainerInner: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -202,5 +210,3 @@ const DashboardListPage: React.FC = () => {
     </div>
   );
 };
-
-export default DashboardListPage;
