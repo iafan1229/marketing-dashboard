@@ -11,7 +11,7 @@ import {
   YAxis,
   ResponsiveContainer,
 } from "recharts";
-import { ChartType } from "@/types/app/user";
+import { ChartType } from "@/types/app/chart";
 
 interface ChartProps {
   type: ChartType;
