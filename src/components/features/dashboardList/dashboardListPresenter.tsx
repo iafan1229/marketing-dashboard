@@ -32,7 +32,7 @@ export function DashboardListPresenter({
           onClick={() => router.push("/dashboard/create")}
           className='bg-blue-600 hover:bg-blue-700'
         >
-          + 새 대시보드
+          + Create New Dashboard
         </Button>
       </div>
 
@@ -43,7 +43,7 @@ export function DashboardListPresenter({
             onClick={() => router.push("/dashboard/create")}
             className='bg-blue-600 hover:bg-blue-700'
           >
-            첫 번째 대시보드 만들기
+            Create First Dashboard
           </Button>
         </div>
       ) : (

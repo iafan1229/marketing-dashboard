@@ -223,11 +223,11 @@ export default function DashboardDetailPage() {
         {charts.length === 0 ? (
           <Card className='p-12 text-center'>
             <div className='text-gray-500 mb-4'>
-              이 대시보드에는 아직 차트가 없습니다.
+              This dashboard has no charts yet.
             </div>
             {session && (
               <Button onClick={() => router.push("/dashboard/create")}>
-                새 대시보드 만들기
+                Create New Dashboard
               </Button>
             )}
           </Card>
@@ -280,12 +280,13 @@ export default function DashboardDetailPage() {
             </div>
             <div className='ml-3'>
               <h3 className='text-sm font-medium text-blue-800'>
-                대시보드 정보
+                Dashboard Information
               </h3>
               <div className='mt-2 text-sm text-blue-700'>
                 <p>
-                  이 대시보드는 <strong>{charts.length}개의 차트</strong>로
-                  구성되어 있으며, 실시간으로 데이터를 불러와 시각화합니다.
+                  This dashboard is made up of{" "}
+                  <strong>{charts.length} charts</strong> and visualize
+                  real-time data.
                 </p>
                 <div className='mt-2 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs'>
                   <div>
