@@ -170,7 +170,7 @@ export default function DashboardDetailPage() {
               {error || "대시보드를 찾을 수 없습니다."}
             </div>
             <Button onClick={() => router.push("/dashboard/list")}>
-              대시보드 목록으로 돌아가기
+              Back to Dashboard List
             </Button>
           </div>
         </div>
@@ -204,9 +204,9 @@ export default function DashboardDetailPage() {
                 variant='outline'
                 onClick={() => router.push("/dashboard/list")}
               >
-                목록으로
+                Back to Dashboard List
               </Button>
-              {session && (
+              {/* {session && (
                 <Button
                   variant='ghost'
                   onClick={handleDeleteDashboard}
@@ -214,7 +214,7 @@ export default function DashboardDetailPage() {
                 >
                   삭제
                 </Button>
-              )}
+              )} */}
             </div>
           </div>
         </div>
