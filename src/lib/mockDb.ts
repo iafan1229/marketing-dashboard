@@ -1,55 +1,9 @@
 import { Dashboard, Chart } from "@/types/api";
 
 // Mock database - in-memory storage
-let dashboards: Dashboard[] = [
-  {
-    id: "dashboard-1",
-    name: "Marketing KPIs",
-    charts: ["chart-1", "chart-2"],
-    createdAt: "2025-07-20T10:00:00Z",
-    updatedAt: "2025-07-20T10:00:00Z",
-  },
-  {
-    id: "dashboard-2",
-    name: "Sales Overview",
-    charts: ["chart-3"],
-    createdAt: "2025-07-19T14:30:00Z",
-    updatedAt: "2025-07-19T14:30:00Z",
-  },
-];
+let dashboards: Dashboard[] = [];
 
-let charts: Chart[] = [
-  {
-    id: "chart-1",
-    dashboardId: "dashboard-1",
-    type: "bar",
-    title: "Signups by Region",
-    dataEndpoint: "/api/data/signups_by_region",
-    order: 0,
-    createdAt: "2025-07-20T10:00:00Z",
-    updatedAt: "2025-07-20T10:00:00Z",
-  },
-  {
-    id: "chart-2",
-    dashboardId: "dashboard-1",
-    type: "line",
-    title: "Orders Over Time",
-    dataEndpoint: "/api/data/orders_over_time",
-    order: 1,
-    createdAt: "2025-07-20T10:05:00Z",
-    updatedAt: "2025-07-20T10:05:00Z",
-  },
-  {
-    id: "chart-3",
-    dashboardId: "dashboard-2",
-    type: "number",
-    title: "Total Revenue",
-    dataEndpoint: "/api/data/total_revenue",
-    order: 0,
-    createdAt: "2025-07-19T14:30:00Z",
-    updatedAt: "2025-07-19T14:30:00Z",
-  },
-];
+let charts: Chart[] = [];
 
 export const mockDb = {
   // Dashboard operations
