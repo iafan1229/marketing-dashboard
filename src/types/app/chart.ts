@@ -53,19 +53,19 @@ export const MOCK_API_OPTIONS: MockApiOption[] = [
     value: "/api/data/signups_by_region",
     label: "Signups by Region",
     type: "bar",
-    description: "Regional signup data - 지역별 가입자 데이터",
+    description: "Regional signup data - regional signup data",
   },
   {
     value: "/api/data/orders_over_time",
     label: "Orders Over Time",
     type: "line",
-    description: "Time series order data - 시간별 주문 데이터",
+    description: "Time series order data - time series order data",
   },
   {
     value: "/api/data/total_revenue",
     label: "Total Revenue",
     type: "number",
-    description: "Single revenue metric - 총 매출 지표",
+    description: "Single revenue metric - single revenue metric",
   },
 ];
 

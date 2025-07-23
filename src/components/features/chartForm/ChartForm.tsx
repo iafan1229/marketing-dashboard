@@ -34,7 +34,7 @@ export const ChartForm: React.FC<ChartFormProps> = ({
     <Card className='p-6 border-l-4 border-l-brand-mint'>
       <div className='flex items-center justify-between mb-4'>
         <h3 className='text-lg font-semibold text-gray-900'>
-          차트 #{index + 1}
+          Chart #{index + 1}
         </h3>
         {index > 0 && (
           <Button
@@ -55,7 +55,7 @@ export const ChartForm: React.FC<ChartFormProps> = ({
                 d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
               />
             </svg>
-            삭제
+            Delete
           </Button>
         )}
       </div>
@@ -63,32 +63,32 @@ export const ChartForm: React.FC<ChartFormProps> = ({
       <div className='space-y-4'>
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
-            차트 제목 <span className='text-red-500'>*</span>
+            Chart Title <span className='text-red-500'>*</span>
           </label>
           <Input
             type='text'
             value={chart.title}
             onChange={(e) => handleFieldChange("title", e.target.value)}
-            placeholder='예: 지역별 가입자 수'
+            placeholder='For example: Signups by Region'
             required
           />
         </div>
 
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
-            차트 타입 <span className='text-red-500'>*</span>
+            Chart Type <span className='text-red-500'>*</span>
           </label>
           <Select
             options={CHART_TYPE_OPTIONS}
             value={chart.type}
             onChange={(value) => handleFieldChange("type", value)}
-            placeholder='차트 타입을 선택하세요'
+            placeholder='Select chart type'
           />
         </div>
 
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
-            데이터 소스 <span className='text-red-500'>*</span>
+            Data Source <span className='text-red-500'>*</span>
           </label>
           <Select
             options={MOCK_API_OPTIONS.map((api) => ({
@@ -97,11 +97,11 @@ export const ChartForm: React.FC<ChartFormProps> = ({
             }))}
             value={chart.dataEndpoint}
             onChange={(value) => handleFieldChange("dataEndpoint", value)}
-            placeholder='Mock API를 선택하세요'
+            placeholder='Select a mock API'
           />
           {selectedApi && (
             <p className='mt-1 text-sm text-gray-500'>
-              {selectedApi.description} • 권장 타입: {selectedApi.type}
+              {selectedApi.description} • Recommended type: {selectedApi.type}
             </p>
           )}
         </div>
