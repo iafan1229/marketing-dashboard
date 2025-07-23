@@ -1,40 +1,69 @@
-// 🎪 src/components/features/DashboardCreate/DashboardCreatePresenter.tsx
+"use client";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
+import { Header } from "@/components/ui/Header";
+import { Input } from "@/components/ui/Input";
+import { ChartFormData, DashboardCreateProps } from "@/types/app/chart";
+import { useRouter } from "next/navigation";
+import { ChartForm } from "../chartForm/ChartForm";
 
-interface DashboardCreatePresenterProps {
-  title: string;
-  setTitle: (title: string) => void;
-  description: string;
-  setDescription: (description: string) => void;
-  isLoading: boolean;
-  error: string | null;
-  handleSubmit: () => void;
-}
-
-export function DashboardCreatePresenter({
+export const DashboardCreatePresenter: React.FC<DashboardCreateProps> = ({
   title,
   setTitle,
   description,
   setDescription,
+  charts,
+  setCharts,
   isLoading,
   error,
   handleSubmit,
-}: DashboardCreatePresenterProps) {
-  return (
-    <div className='min-h-screen bg-gray-50 py-12'>
-      <div className='max-w-2xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='text-center mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900'>
-            새 대시보드 만들기
-          </h1>
-          <p className='mt-2 text-gray-600'>
-            데이터를 시각화할 새로운 대시보드를 생성하세요
-          </p>
-        </div>
+}) => {
+  const router = useRouter();
 
-        <Card className='p-8'>
+  const addChart = (): void => {
+    setCharts([
+      ...charts,
+      {
+        title: "",
+        type: "",
+        dataEndpoint: "",
+        order: charts.length,
+      },
+    ]);
+  };
+
+  const updateChart = (index: number, updatedChart: ChartFormData): void => {
+    const newCharts = [...charts];
+    newCharts[index] = updatedChart;
+    setCharts(newCharts);
+  };
+
+  const deleteChart = (index: number): void => {
+    if (charts.length > 1) {
+      const newCharts = charts.filter((_, i) => i !== index);
+      const reorderedCharts = newCharts.map((chart, i) => ({
+        ...chart,
+        order: i,
+      }));
+      setCharts(reorderedCharts);
+    }
+  };
+
+  return (
+    <div className='min-h-screen bg-gray-50'>
+      <Header />
+
+      <div className='py-12'>
+        <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='text-center mb-8'>
+            <h1 className='text-3xl font-bold text-gray-900'>
+              새 대시보드 만들기
+            </h1>
+            <p className='mt-2 text-gray-600'>
+              대시보드 정보를 입력하고 차트들을 구성하세요
+            </p>
+          </div>
+
           {error && (
             <div className='mb-6 p-4 bg-red-50 border border-red-200 rounded-md'>
               <div className='flex'>
@@ -63,59 +92,103 @@ export function DashboardCreatePresenter({
               e.preventDefault();
               handleSubmit();
             }}
-            className='space-y-6'
+            className='space-y-8'
           >
+            {/* Dashboard Info Section */}
+            <Card className='p-8'>
+              <h2 className='text-xl font-semibold text-gray-900 mb-6'>
+                대시보드 정보
+              </h2>
+
+              <div className='space-y-6'>
+                <div>
+                  <label
+                    htmlFor='title'
+                    className='block text-sm font-medium text-gray-700 mb-2'
+                  >
+                    대시보드 제목 <span className='text-red-500'>*</span>
+                  </label>
+                  <Input
+                    id='title'
+                    type='text'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder='예: 월간 매출 분석 대시보드'
+                    disabled={isLoading}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor='description'
+                    className='block text-sm font-medium text-gray-700 mb-2'
+                  >
+                    설명 (선택사항)
+                  </label>
+                  <textarea
+                    id='description'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder='이 대시보드에서 어떤 데이터를 분석하고 시각화할지 간단히 설명해주세요...'
+                    className='w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none'
+                    rows={3}
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+            </Card>
+
+            {/* Charts Section */}
             <div>
-              <label
-                htmlFor='title'
-                className='block text-sm font-medium text-gray-700 mb-2'
-              >
-                대시보드 제목 <span className='text-red-500'>*</span>
-              </label>
-              <Input
-                id='title'
-                type='text'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder='예: 월간 매출 분석 대시보드'
-                disabled={isLoading}
-                className='w-full'
-                required
-              />
-              <p className='mt-1 text-sm text-gray-500'>
-                대시보드의 목적을 명확하게 나타내는 제목을 입력하세요
-              </p>
+              <div className='flex items-center justify-between mb-6'>
+                <h2 className='text-xl font-semibold text-gray-900'>
+                  차트 구성
+                </h2>
+                <Button
+                  type='button'
+                  variant='outline'
+                  onClick={addChart}
+                  disabled={isLoading}
+                  className='flex items-center'
+                >
+                  <svg
+                    className='w-4 h-4 mr-2'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+                    />
+                  </svg>
+                  차트 추가
+                </Button>
+              </div>
+
+              <div className='space-y-6'>
+                {charts.map((chart, index) => (
+                  <ChartForm
+                    key={index}
+                    chart={chart}
+                    onChange={updateChart}
+                    onDelete={deleteChart}
+                    index={index}
+                  />
+                ))}
+              </div>
             </div>
 
-            <div>
-              <label
-                htmlFor='description'
-                className='block text-sm font-medium text-gray-700 mb-2'
-              >
-                설명 (선택사항)
-              </label>
-              <textarea
-                id='description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder='이 대시보드에서 어떤 데이터를 분석하고 시각화할지 간단히 설명해주세요...'
-                className='w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none'
-                rows={4}
-                disabled={isLoading}
-              />
-              <p className='mt-1 text-sm text-gray-500'>
-                팀원들이 이해할 수 있도록 대시보드의 용도와 포함될 내용을
-                설명하세요
-              </p>
-            </div>
-
+            {/* Action Buttons */}
             <div className='flex items-center justify-between pt-6 border-t border-gray-200'>
               <Button
                 type='button'
                 variant='outline'
-                onClick={() => window.history.back()}
+                onClick={() => router.back()}
                 disabled={isLoading}
-                className='px-6'
               >
                 취소
               </Button>
@@ -123,7 +196,7 @@ export function DashboardCreatePresenter({
               <Button
                 type='submit'
                 disabled={isLoading || !title.trim()}
-                className='px-8 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                className='bg-brand-purple hover:bg-brand-purple/90 disabled:opacity-50'
               >
                 {isLoading ? (
                   <div className='flex items-center'>
@@ -140,27 +213,28 @@ export function DashboardCreatePresenter({
                         r='10'
                         stroke='currentColor'
                         strokeWidth='4'
-                      ></circle>
+                      />
                       <path
                         className='opacity-75'
                         fill='currentColor'
                         d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-                      ></path>
+                      />
                     </svg>
                     생성 중...
                   </div>
                 ) : (
-                  "대시보드 생성"
+                  `대시보드 생성 (${charts.length}개 차트)`
                 )}
               </Button>
             </div>
           </form>
 
-          <div className='mt-6 p-4 bg-blue-50 rounded-md'>
+          {/* Tips Section */}
+          <Card className='mt-8 p-6 bg-brand-mint/10 border-brand-mint/30'>
             <div className='flex'>
               <div className='flex-shrink-0'>
                 <svg
-                  className='h-5 w-5 text-blue-400'
+                  className='h-5 w-5 text-brand-purple'
                   viewBox='0 0 20 20'
                   fill='currentColor'
                 >
@@ -172,15 +246,34 @@ export function DashboardCreatePresenter({
                 </svg>
               </div>
               <div className='ml-3'>
-                <p className='text-sm text-blue-700'>
-                  <strong>팁:</strong> 대시보드 생성 후 차트, 그래프, 테이블 등
-                  다양한 위젯을 추가하여 데이터를 시각화할 수 있습니다.
-                </p>
+                <h3 className='text-sm font-medium text-brand-purple'>
+                  사용 팁
+                </h3>
+                <div className='mt-2 text-sm text-gray-700'>
+                  <ul className='list-disc list-inside space-y-1'>
+                    <li>
+                      <strong>데이터 소스 선택:</strong> 원하는 데이터를
+                      선택하세요
+                    </li>
+                    <li>
+                      <strong>차트 타입 자유 선택:</strong> 같은 데이터를 Bar,
+                      Line, Number로 다양하게 시각화 가능
+                    </li>
+                    <li>
+                      <strong>추천 타입:</strong> 노란색 박스의 추천 타입을
+                      참고하되, 원하는 대로 변경하세요
+                    </li>
+                    <li>
+                      <strong>실험해보세요:</strong> 어떤 타입이 데이터를 가장
+                      잘 표현하는지 직접 확인해보세요
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     </div>
   );
-}
+};

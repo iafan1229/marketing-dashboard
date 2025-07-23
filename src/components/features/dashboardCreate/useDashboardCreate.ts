@@ -1,21 +1,39 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useStore } from "@/store/useStore";
+"use client";
 
-export function useDashboardCreate() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+import { ChartFormData } from "@/types/app/chart";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export const useDashboardCreate = () => {
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [charts, setCharts] = useState<ChartFormData[]>([
+    {
+      title: "",
+      type: "",
+      dataEndpoint: "",
+      order: 0,
+    },
+  ]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
   const { data: session } = useSession();
-  const { addDashboard } = useStore();
 
   const handleSubmit = async () => {
     if (!title.trim()) {
       setError("대시보드 제목을 입력해주세요.");
+      return;
+    }
+
+    const incompleteCharts = charts.some(
+      (chart) => !chart.title.trim() || !chart.type || !chart.dataEndpoint
+    );
+
+    if (incompleteCharts) {
+      setError("모든 차트의 제목, 타입, 데이터 소스를 설정해주세요.");
       return;
     }
 
@@ -28,11 +46,12 @@ export function useDashboardCreate() {
     setError(null);
 
     try {
-      const response = await fetch("/api/dashboards", {
+      // 1. 대시보드 생성
+      const dashboardResponse = await fetch("/api/dashboards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title,
+          name: title,
           description,
           user: {
             id: session.user.id,
@@ -43,12 +62,30 @@ export function useDashboardCreate() {
         }),
       });
 
-      if (!response.ok) {
+      if (!dashboardResponse.ok) {
         throw new Error("대시보드 생성에 실패했습니다.");
       }
 
-      const newDashboard = await response.json();
-      addDashboard(newDashboard);
+      const newDashboard = await dashboardResponse.json();
+
+      // 2. 각 차트 생성
+      for (const chart of charts) {
+        const chartResponse = await fetch("/api/charts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            dashboardId: newDashboard.id,
+            type: chart.type,
+            title: chart.title,
+            dataEndpoint: chart.dataEndpoint,
+            order: chart.order,
+          }),
+        });
+
+        if (!chartResponse.ok) {
+          throw new Error("차트 생성에 실패했습니다.");
+        }
+      }
 
       router.push("/");
     } catch (error) {
@@ -64,8 +101,10 @@ export function useDashboardCreate() {
     setTitle,
     description,
     setDescription,
+    charts,
+    setCharts,
     isLoading,
     error,
     handleSubmit,
   };
-}
+};

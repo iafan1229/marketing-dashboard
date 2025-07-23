@@ -1,0 +1,65 @@
+export interface ChartFormData {
+  title: string;
+  type: "bar" | "line" | "number" | "";
+  dataEndpoint: string;
+  order: number;
+}
+
+export interface MockApiOption {
+  value: string;
+  label: string;
+  type: "bar" | "line" | "number";
+  description: string;
+}
+
+export interface ChartTypeOption {
+  value: "bar" | "line" | "number";
+  label: string;
+}
+
+export interface ChartFormProps {
+  chart: ChartFormData;
+  onChange: (index: number, chart: ChartFormData) => void;
+  onDelete: (index: number) => void;
+  index: number;
+}
+
+export interface DashboardCreateProps {
+  title: string;
+  setTitle: (title: string) => void;
+  description: string;
+  setDescription: (description: string) => void;
+  charts: ChartFormData[];
+  setCharts: (charts: ChartFormData[]) => void;
+  isLoading: boolean;
+  error: string | null;
+  handleSubmit: () => void;
+}
+
+// Mock API 옵션들
+export const MOCK_API_OPTIONS: MockApiOption[] = [
+  {
+    value: "/api/data/signups_by_region",
+    label: "Signups by Region",
+    type: "bar",
+    description: "Regional signup data - 지역별 가입자 데이터",
+  },
+  {
+    value: "/api/data/orders_over_time",
+    label: "Orders Over Time",
+    type: "line",
+    description: "Time series order data - 시간별 주문 데이터",
+  },
+  {
+    value: "/api/data/total_revenue",
+    label: "Total Revenue",
+    type: "number",
+    description: "Single revenue metric - 총 매출 지표",
+  },
+];
+
+export const CHART_TYPE_OPTIONS: ChartTypeOption[] = [
+  { value: "bar", label: "Bar Chart" },
+  { value: "line", label: "Line Chart" },
+  { value: "number", label: "Number/Metric" },
+];

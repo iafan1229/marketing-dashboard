@@ -4,11 +4,10 @@ import { useSession } from "next-auth/react";
 import { DashboardCreatePresenter } from "./DashboardCreatePresenter";
 import { useDashboardCreate } from "./useDashboardCreate";
 
-export function DashboardCreateContainer() {
+export const DashboardCreateContainer = () => {
   const { data: session, status } = useSession();
   const dashboardCreate = useDashboardCreate();
 
-  // middleware가 이미 인증을 체크했으므로 로딩만 처리
   if (status === "loading") {
     return (
       <div className='min-h-screen flex items-center justify-center'>
@@ -18,4 +17,4 @@ export function DashboardCreateContainer() {
   }
 
   return <DashboardCreatePresenter {...dashboardCreate} />;
-}
+};
