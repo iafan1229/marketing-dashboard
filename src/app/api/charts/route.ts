@@ -59,11 +59,11 @@ export async function POST(request: NextRequest) {
     // Generate data endpoint based on type and title if not provided
     let dataEndpoint = body.dataEndpoint;
     if (!dataEndpoint) {
-      // Auto-generate based on chart type and title
       const titleSlug = body.title.toLowerCase().replace(/\s+/g, "_");
       dataEndpoint = `/api/data/${titleSlug}`;
     }
 
+    // Create chart
     const chartData = {
       dashboardId: body.dashboardId,
       type: body.type,
@@ -76,6 +76,9 @@ export async function POST(request: NextRequest) {
     };
 
     const newChart = createChart(chartData);
+
+    // Add chart ID to dashboard's charts array
+    dashboard.charts.push(newChart.id);
 
     return NextResponse.json(newChart, { status: 201 });
   } catch (error) {
