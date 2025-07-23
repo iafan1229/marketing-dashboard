@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 기본적으로 빈 객체이거나 아래와 같은 최소 설정
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // MSW를 위한 fallback 설정
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
 };
+module.exports = nextConfig;

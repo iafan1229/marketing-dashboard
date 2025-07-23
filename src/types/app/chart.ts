@@ -1,3 +1,14 @@
+export type ChartType =
+  | "bar"
+  | "line"
+  | "number"
+  | "pie"
+  | "area"
+  | "donut"
+  | "radar"
+  | "scatter"
+  | "metric";
+
 export interface ChartFormData {
   title: string;
   type: "bar" | "line" | "number" | "";
