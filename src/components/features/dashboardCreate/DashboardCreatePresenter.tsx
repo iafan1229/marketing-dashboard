@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Header } from "@/components/ui/Header";
 import { Input } from "@/components/ui/Input";
-import { ChartFormData, DashboardCreateProps } from "@/types/app/chart";
+import { ChartFormData, DashboardCreateProps } from "@/types/dashboard";
 import { useRouter } from "next/navigation";
 import { ChartForm } from "../chartForm/ChartForm";
 

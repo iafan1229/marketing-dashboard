@@ -1,17 +1,14 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import React from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
-import { Header } from "@/components/ui/Header";
 import { Select } from "@/components/ui/Select";
 import {
   CHART_TYPE_OPTIONS,
   ChartFormData,
   ChartFormProps,
-  MOCK_API_OPTIONS,
-} from "@/types/app/chart";
+} from "@/types/dashboard";
+import { MOCK_API_OPTIONS } from "@/types/api";
 
 export const ChartForm: React.FC<ChartFormProps> = ({
   chart,
@@ -29,6 +26,7 @@ export const ChartForm: React.FC<ChartFormProps> = ({
   const selectedApi = MOCK_API_OPTIONS.find(
     (api) => api.value === chart.dataEndpoint
   );
+  const recommendedTypes = selectedApi?.type || [];
 
   return (
     <Card className='p-6 border-l-4 border-l-brand-mint'>
@@ -42,19 +40,6 @@ export const ChartForm: React.FC<ChartFormProps> = ({
             onClick={() => onDelete(index)}
             className='text-red-600 hover:text-red-800 hover:bg-red-50'
           >
-            <svg
-              className='w-4 h-4'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
-              />
-            </svg>
             Delete
           </Button>
         )}
@@ -69,20 +54,8 @@ export const ChartForm: React.FC<ChartFormProps> = ({
             type='text'
             value={chart.title}
             onChange={(e) => handleFieldChange("title", e.target.value)}
-            placeholder='For example: Signups by Region'
+            placeholder='e.g., Monthly Sales Performance'
             required
-          />
-        </div>
-
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Chart Type <span className='text-red-500'>*</span>
-          </label>
-          <Select
-            options={CHART_TYPE_OPTIONS}
-            value={chart.type}
-            onChange={(value) => handleFieldChange("type", value)}
-            placeholder='Select chart type'
           />
         </div>
 
@@ -97,16 +70,41 @@ export const ChartForm: React.FC<ChartFormProps> = ({
             }))}
             value={chart.dataEndpoint}
             onChange={(value) => handleFieldChange("dataEndpoint", value)}
-            placeholder='Select a mock API'
+            placeholder='Select a data source'
           />
           {selectedApi && (
             <p className='mt-1 text-sm text-gray-500'>
-              {selectedApi.description} • Recommended type: {selectedApi.type}
+              {selectedApi.description}
             </p>
           )}
         </div>
 
-        {/* Chart Preview Info */}
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Chart Type <span className='text-red-500'>*</span>
+          </label>
+
+          {/* 추천 차트 타입 표시 */}
+          {recommendedTypes.length > 0 && (
+            <div className='mb-3 p-2 bg-yellow-50 border border-yellow-200 rounded-md'>
+              <p className='text-xs text-yellow-800 font-medium'>
+                Recommended for this data: {recommendedTypes.join(", ")}
+              </p>
+            </div>
+          )}
+
+          <Select
+            options={CHART_TYPE_OPTIONS.map((option) => ({
+              value: option.value,
+              label: `${option.label} - ${option.description}`,
+            }))}
+            value={chart.type}
+            onChange={(value) => handleFieldChange("type", value)}
+            placeholder='Select chart type'
+          />
+        </div>
+
+        {/* 차트 미리보기 */}
         {chart.title && chart.type && chart.dataEndpoint && (
           <div className='mt-4 p-3 bg-green-50 border border-green-200 rounded-md'>
             <div className='flex'>
@@ -125,7 +123,7 @@ export const ChartForm: React.FC<ChartFormProps> = ({
               </div>
               <div className='ml-3'>
                 <p className='text-sm text-green-700'>
-                  <strong>미리보기:</strong> {chart.title} ({chart.type} 차트)
+                  <strong>Preview:</strong> {chart.title} ({chart.type} chart)
                 </p>
               </div>
             </div>

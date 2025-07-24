@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Dashboard, Chart } from "@/types/api";
+import { Dashboard, Chart } from "@/types/dashboard";
 
 interface StoreState {
   dashboards: Dashboard[];

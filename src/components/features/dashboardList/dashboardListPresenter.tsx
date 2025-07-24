@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Dashboard } from "@/types/api";
+import { Dashboard } from "@/types/dashboard";
 import { useRouter } from "next/navigation";
 
 interface DashboardListPresenterProps {

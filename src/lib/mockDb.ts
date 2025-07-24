@@ -1,4 +1,4 @@
-import { Dashboard, Chart } from "@/types/api";
+import { Dashboard, Chart } from "@/types/dashboard";
 
 // Mock database - in-memory storage
 let dashboards: Dashboard[] = [];
