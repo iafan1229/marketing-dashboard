@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ChartForm } from "@/components/ui/ChartForm";
 import { Header } from "@/components/ui/Header";
 import { Input } from "@/components/ui/Input";
 import { ChartFormData, DashboardCreateProps } from "@/types/app/chart";
 import { useRouter } from "next/navigation";
-import { ChartForm } from "../chartForm/ChartForm";
 
 export const DashboardCreatePresenter: React.FC<DashboardCreateProps> = ({
   title,
