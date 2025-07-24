@@ -1,6 +1,6 @@
 "use client";
 
-import { ChartFormData } from "@/types/dashboard";
+import { ChartFormData } from "@/types/app/chart";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

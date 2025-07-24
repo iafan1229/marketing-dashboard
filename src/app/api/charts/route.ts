@@ -1,18 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mockDb } from "@/lib/mockDb";
 
-const VALID_CHART_TYPES = [
-  "bar",
-  "line",
-  "number",
-  "pie",
-  "area",
-  "donut",
-  "radar",
-  "scatter",
-  "metric",
-];
-
 export async function GET() {
   try {
     const charts = mockDb.charts.getAll();
@@ -37,13 +25,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!VALID_CHART_TYPES.includes(body.type)) {
+    if (!["bar", "line", "number"].includes(body.type)) {
       return NextResponse.json(
-        {
-          error: `Invalid chart type. Must be one of: ${VALID_CHART_TYPES.join(
-            ", "
-          )}`,
-        },
+        { error: "Invalid chart type" },
         { status: 400 }
       );
     }

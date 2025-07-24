@@ -8,7 +8,7 @@ import { Header } from "@/components/ui/Header";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chart } from "@/components/ui/Chart";
-import { Dashboard, Chart as ChartType } from "@/types/dashboard";
+import { Dashboard, Chart as ChartType } from "@/types/api";
 
 export default function DashboardDetailPage() {
   const params = useParams();
