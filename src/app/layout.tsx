@@ -13,10 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    // 항상 MSW 활성화
-    import("../lib/msw").then(({ enableMocking }) => {
-      enableMocking();
-    });
+    // 개발 환경에서만 MSW 활성화
+    if (process.env.NODE_ENV === "development") {
+      import("../lib/msw").then(({ enableMocking }) => {
+        enableMocking();
+      });
+    }
   }, []);
   return (
     <html lang='ko'>
