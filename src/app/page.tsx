@@ -1,12 +1,15 @@
 // src/app/page.tsx - 메인 랜딩 페이지
 "use client";
 
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Header } from "@/components/ui/Header";
+import { MainCard } from "@/components/ui/MainCard";
+import { Button } from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50'>
@@ -30,30 +33,37 @@ export default function HomePage() {
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             {session ? (
               <>
-                <Link
-                  href='/dashboard/list'
-                  className='btn-primary text-lg px-8 py-3'
+                <Button
+                  onClick={() => router.push("/dashboard/list")}
+                  variant='primary'
+                  size='lg'
                 >
                   View My Dashboards
-                </Link>
-                <Link
-                  href='/dashboard/create'
-                  className='btn-secondary text-lg px-8 py-3'
+                </Button>
+                <Button
+                  onClick={() => router.push("/dashboard/create")}
+                  variant='secondary'
+                  size='lg'
                 >
                   Create New Dashboard
-                </Link>
+                </Button>
               </>
             ) : (
               <>
-                <Link href='/login' className='btn-primary text-lg px-8 py-3'>
+                <Button
+                  onClick={() => router.push("/login")}
+                  variant='primary'
+                  size='lg'
+                >
                   Get Started
-                </Link>
-                <Link
-                  href='/dashboard/list'
-                  className='btn-secondary text-lg px-8 py-3'
+                </Button>
+                <Button
+                  onClick={() => router.push("/dashboard/list")}
+                  variant='secondary'
+                  size='lg'
                 >
                   Explore Dashboards
-                </Link>
+                </Button>
               </>
             )}
           </div>
@@ -72,83 +82,22 @@ export default function HomePage() {
 
           <div className='grid md:grid-cols-3 gap-8'>
             {/* Feature 1 */}
-            <div className='bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow'>
-              <div className='w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6'>
-                <svg
-                  className='w-6 h-6 text-blue-600'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
-                  />
-                </svg>
-              </div>
-              <h3 className='text-xl font-semibold text-gray-900 mb-3'>
-                Interactive Charts
-              </h3>
-              <p className='text-gray-600'>
-                Create beautiful, interactive visualizations with our
-                comprehensive chart library. From simple bar charts to complex
-                heatmaps.
-              </p>
-            </div>
+            <MainCard
+              title='Interactive Charts'
+              description='Create beautiful, interactive visualizations with our comprehensive chart library. From simple bar charts to complex heatmaps.'
+            />
 
             {/* Feature 2 */}
-            <div className='bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow'>
-              <div className='w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6'>
-                <svg
-                  className='w-6 h-6 text-purple-600'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M13 10V3L4 14h7v7l9-11h-7z'
-                  />
-                </svg>
-              </div>
-              <h3 className='text-xl font-semibold text-gray-900 mb-3'>
-                Real-time Updates
-              </h3>
-              <p className='text-gray-600'>
-                Keep your dashboards current with real-time data updates. Never
-                miss important changes in your metrics.
-              </p>
-            </div>
+            <MainCard
+              title='Real-time Updates'
+              description='Keep your dashboards current with real-time data updates. Never miss important changes in your metrics.'
+            />
 
             {/* Feature 3 */}
-            <div className='bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow'>
-              <div className='w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6'>
-                <svg
-                  className='w-6 h-6 text-green-600'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
-                  />
-                </svg>
-              </div>
-              <h3 className='text-xl font-semibold text-gray-900 mb-3'>
-                Team Collaboration
-              </h3>
-              <p className='text-gray-600'>
-                Share dashboards with your team, set permissions, and
-                collaborate on data analysis in real-time.
-              </p>
-            </div>
+            <MainCard
+              title='Team Collaboration'
+              description='Share dashboards with your team, set permissions, and collaborate on data analysis in real-time.'
+            />
           </div>
         </div>
 
@@ -163,19 +112,21 @@ export default function HomePage() {
               decisions.
             </p>
             {session ? (
-              <Link
-                href='/dashboard/create'
-                className='inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors'
+              <Button
+                onClick={() => router.push("/dashboard/create")}
+                size='lg'
+                variant='white'
               >
                 Create Your First Dashboard
-              </Link>
+              </Button>
             ) : (
-              <Link
-                href='/login'
-                className='inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors'
+              <Button
+                onClick={() => router.push("/login")}
+                size='lg'
+                variant='white'
               >
                 Get Started Now
-              </Link>
+              </Button>
             )}
           </div>
         </div>
