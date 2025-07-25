@@ -20,12 +20,19 @@ A web application for easily creating dashboards with interactive charts.
 
 ![Dashboard Detail View](https://postfiles.pstatic.net/MjAyNTA3MjRfMjM0/MDAxNzUzMzMwNTQzMzgz.zi6Sb7girqjzISYhgc-CRR5B8AI7J5VPsdbw4QRqYBog.peXpLScUbPsQ5t3bhcUcJw6lbAOET2NBVuqLWw2-oo4g.PNG/3.png?type=w3840)
 
+## 🎨 Core Features
+
+- **Modern React Pattern**: Atomic Design Pattern / Container-Presenter-Hook Pattern
+- **Expandable Architecture**: Adding new charts, features, and UI components is easy
+- **UI Components**: Reusable component system
+- **UI Desgisn** : Tailwind CSS
+- **Google Authentication**: Simple login with NextAuth.js
+
 ## ✨ Key Features
 
 - **Dashboard Creation**: Build custom dashboards with multiple charts
 - **Chart Variety**: Support for bar charts, line charts, and number displays
-- **Real-time Data**: Dynamic data visualization through Mock API
-- **Google Authentication**: Simple login with NextAuth.js
+- **Data Visualization**: Dynamic data visualization through Mock API
 - **Responsive Design**: Mobile-friendly interface
 
 ## 🛠️ Tech Stack
@@ -36,6 +43,7 @@ A web application for easily creating dashboards with interactive charts.
 - **Authentication**: NextAuth.js
 - **State Management**: Zustand
 - **Development**: MSW (Mock Service Worker)
+- **Production**: API route / Vercel
 
 ## 📊 How to Use
 
@@ -44,8 +52,8 @@ A web application for easily creating dashboards with interactive charts.
 3. **Create Dashboard**:
    - Enter dashboard title
    - Add and configure charts (title, type, data source)
-   - Preview and create
-4. **View Results**: Visualize charts with real-time mock data
+   - Create dashboard
+4. **View Results**: Visualize charts with mock data
 
 ## 📈 Chart Types
 
@@ -57,11 +65,11 @@ A web application for easily creating dashboards with interactive charts.
 
 ```
 src/
-├── app/                    # Next.js pages
-├── components/
+├── app/                   # Next.js pages
+├── components/            # Atomic Design Pattern
 │   ├── features/          # Feature components
 │   └── ui/                # Common UI components
-├── lib/                   # Utilities
+├── lib/                   # Settings
 ├── mocks/                 # Mock API handlers
 └── types/                 # Type definitions
 ```
@@ -72,9 +80,3 @@ src/
 - **Mock Data**: Regional signups, orders over time, total revenue, etc.
 - **TypeScript**: Type safety
 - **ESLint**: Code quality management
-
-## 🎨 Design
-
-- **Brand Colors**: Mint(#7fdccb), Purple(#bb54a8)
-- **Responsive**: Mobile-first design
-- **UI Components**: Reusable component system
