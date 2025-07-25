@@ -18,7 +18,7 @@ export function Header() {
           {session?.user ? (
             <UserProfile
               user={session.user}
-              onSignOut={() => signOut({ callbackUrl: "/" })}
+              onSignOut={() => signOut({ callbackUrl: "/", redirect: true })}
             />
           ) : null}
         </div>
