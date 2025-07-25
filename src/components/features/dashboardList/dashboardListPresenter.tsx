@@ -1,87 +1,177 @@
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Dashboard } from "@/types/api";
-import { useRouter } from "next/navigation";
+"use client";
 
-interface DashboardListPresenterProps {
-  dashboards: Dashboard[];
-  isLoading: boolean;
-  error: string | null;
+import Pagination from "@/components/ui/Pagination";
+
+interface ListItem {
+  id: string;
+  name: string;
+  charts: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-export function DashboardListPresenter({
-  dashboards,
-  isLoading,
-  error,
-}: DashboardListPresenterProps) {
-  const router = useRouter();
+interface DashboardListPresenterProps {
+  items: ListItem[];
+  currentItems: ListItem[];
+  loading: boolean;
+  currentPage: number;
+  totalPages: number;
+  itemsPerPage: number;
+  handlePageChange: (page: number) => void;
+  handleCreateDashboard: () => void;
+  handleViewDashboard: (id: string) => void;
+}
 
-  if (isLoading) {
-    return <div className='text-center py-8'>로딩 중...</div>;
-  }
+export const DashboardListPresenter: React.FC<DashboardListPresenterProps> = ({
+  items,
+  currentItems,
+  loading,
+  currentPage,
+  totalPages,
+  itemsPerPage,
+  handlePageChange,
+  handleCreateDashboard,
+  handleViewDashboard,
+}) => {
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
-  if (error) {
-    return <div className='text-center py-8 text-red-600'>오류: {error}</div>;
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-lg text-gray-600'>Loading data...</div>
+      </div>
+    );
   }
 
   return (
-    <div className='max-w-6xl mx-auto p-6'>
-      <div className='flex justify-between items-center mb-8'>
-        <h1 className='text-3xl font-bold text-gray-900'>Dashboard List</h1>
-        <Button
-          onClick={() => router.push("/dashboard/create")}
-          className='bg-blue-600 hover:bg-blue-700'
-        >
-          + Create New Dashboard
-        </Button>
-      </div>
+    <div className='min-h-screen bg-gray-50'>
+      <div className='container mx-auto px-4 py-8'>
+        <div className='max-w-6xl mx-auto'>
+          {/* Header */}
+          <div className='mb-8'>
+            <h1 className='text-3xl font-bold text-gray-900 mb-2'>
+              Dashboard List
+            </h1>
+            <p className='text-gray-600'>
+              Total {items.length} dashboards available.
+            </p>
+          </div>
 
-      {dashboards.length === 0 ? (
-        <div className='text-center py-12'>
-          <p className='text-gray-500 mb-4'>아직 대시보드가 없습니다.</p>
-          <Button
-            onClick={() => router.push("/dashboard/create")}
-            className='bg-blue-600 hover:bg-blue-700'
-          >
-            Create First Dashboard
-          </Button>
-        </div>
-      ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {dashboards.map((dashboard) => (
-            <Card
-              key={dashboard.id}
-              className='p-6 hover:shadow-lg transition-shadow'
+          {/* Result info and Add button */}
+          <div className='mb-4 flex justify-between items-center'>
+            <div className='text-sm text-gray-600'>
+              {items.length > 0 ? (
+                <>
+                  Showing {(currentPage - 1) * itemsPerPage + 1}-
+                  {Math.min(currentPage * itemsPerPage, items.length)} of{" "}
+                  {items.length} dashboards
+                </>
+              ) : (
+                "No dashboards found"
+              )}
+            </div>
+            <button
+              onClick={handleCreateDashboard}
+              className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors whitespace-nowrap'
             >
-              {/* title → name으로 변경 */}
-              <h3 className='text-xl font-semibold mb-2'>{dashboard.name}</h3>
+              Add New Dashboard
+            </button>
+          </div>
 
-              {/* description이 없으므로 제거하거나 조건부 렌더링 */}
-              {/* {dashboard.description && (
-                <p className='text-gray-600 mb-4'>{dashboard.description}</p>
-              )} */}
+          {/* List */}
+          <div className='bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden'>
+            {currentItems.length > 0 ? (
+              <>
+                {/* Table header */}
+                <div className='bg-gray-50 px-6 py-4 border-b border-gray-200'>
+                  <div className='grid grid-cols-12 gap-4 text-sm font-medium text-gray-700'>
+                    <div className='col-span-4'>Dashboard Name</div>
+                    <div className='col-span-3'>Charts Count</div>
+                    <div className='col-span-3'>Created Date</div>
+                    <div className='col-span-2'>Actions</div>
+                  </div>
+                </div>
 
-              {/* user 정보가 없으므로 차트 개수로 대체 */}
-              <div className='flex items-center space-x-2 mb-4 text-sm text-gray-500'>
-                <span>{dashboard.charts.length}개의 차트</span>
+                {/* List items */}
+                <div className='divide-y divide-gray-200'>
+                  {currentItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className='px-6 py-4 hover:bg-gray-50 transition-colors'
+                    >
+                      <div className='grid grid-cols-12 gap-4 items-center'>
+                        <div className='col-span-4'>
+                          <h3 className='font-medium text-gray-900 mb-1'>
+                            {item.name}
+                          </h3>
+                          {/* <p className='text-xs text-gray-500'>ID: {item.id}</p> */}
+                        </div>
+
+                        <div className='col-span-3'>
+                          <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'>
+                            {item.charts.length} Charts
+                          </span>
+                        </div>
+
+                        <div className='col-span-3'>
+                          <p className='text-sm text-gray-600'>
+                            {formatDate(item.createdAt)}
+                          </p>
+                          <p className='text-xs text-gray-500'>
+                            Updated: {formatDate(item.updatedAt)}
+                          </p>
+                        </div>
+
+                        <div className='col-span-2'>
+                          <div className='flex space-x-2'>
+                            <button
+                              onClick={() => handleViewDashboard(item.id)}
+                              className='text-blue-600 hover:text-blue-800 text-sm font-medium'
+                            >
+                              View
+                            </button>
+                            {/* <button
+                              onClick={() =>
+                                router.push(`/dashboard/{item.id}/edit`)
+                              }
+                              className='text-gray-600 hover:text-gray-800 text-sm font-medium'
+                            >
+                              Edit
+                            </button> */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className='text-center py-12 text-gray-500'>
+                No dashboards created yet.
               </div>
+            )}
+          </div>
 
-              <div className='flex justify-between items-center'>
-                <span className='text-sm text-gray-400'>
-                  {new Date(dashboard.createdAt).toLocaleDateString("ko-KR")}
-                </span>
-                <Button
-                  onClick={() => router.push(`/dashboard/${dashboard.id}`)}
-                  variant='outline'
-                  size='sm'
-                >
-                  열기
-                </Button>
-              </div>
-            </Card>
-          ))}
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              showPageNumbers={true}
+              maxVisiblePages={5}
+            />
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
-}
+};
