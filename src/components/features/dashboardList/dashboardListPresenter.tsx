@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
+import { Loading } from "@/components/ui/Loading";
 import Pagination from "@/components/ui/Pagination";
 
 interface ListItem {
@@ -44,11 +46,7 @@ export const DashboardListPresenter: React.FC<DashboardListPresenterProps> = ({
   };
 
   if (loading) {
-    return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <div className='text-lg text-gray-600'>Loading data...</div>
-      </div>
-    );
+    return <Loading text='Loading Data...' />;
   }
 
   return (
@@ -78,12 +76,9 @@ export const DashboardListPresenter: React.FC<DashboardListPresenterProps> = ({
                 "No dashboards found"
               )}
             </div>
-            <button
-              onClick={handleCreateDashboard}
-              className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors whitespace-nowrap'
-            >
+            <Button onClick={handleCreateDashboard} variant='primary' size='lg'>
               Add New Dashboard
-            </button>
+            </Button>
           </div>
 
           {/* List */}
@@ -132,12 +127,13 @@ export const DashboardListPresenter: React.FC<DashboardListPresenterProps> = ({
 
                         <div className='col-span-2'>
                           <div className='flex space-x-2'>
-                            <button
+                            <Button
                               onClick={() => handleViewDashboard(item.id)}
-                              className='text-blue-600 hover:text-blue-800 text-sm font-medium'
+                              variant='ghost'
+                              size='sm'
                             >
                               View
-                            </button>
+                            </Button>
                             {/* <button
                               onClick={() =>
                                 router.push(`/dashboard/{item.id}/edit`)

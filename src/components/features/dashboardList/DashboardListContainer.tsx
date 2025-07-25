@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useDashboardList } from "./useDashboardList";
-import { DashboardListPresenter } from "./dashboardListPresenter";
+import { DashboardListPresenter } from "./DashboardListPresenter";
 
 export const DashboardListContainer = () => {
   return (
