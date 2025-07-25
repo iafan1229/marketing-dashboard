@@ -1,3 +1,4 @@
+// src/components/features/dashboardDetail/DashboardDetailPresenter.tsx
 "use client";
 
 import { Header } from "@/components/ui/Header";
@@ -42,31 +43,83 @@ export const DashboardDetailPresenter: React.FC<
       );
     }
 
-    // 차트 타입에 따라 데이터 형식 변환
+    // number 차트는 별도 처리
     if (chart.type === "number") {
-      return (
-        <div className='flex flex-col items-center justify-center h-64'>
-          <div className='text-4xl font-bold text-gray-900 mb-2'>
-            {typeof data.value === "number"
-              ? data.value.toLocaleString()
-              : data.value}
+      // 단일 값인 경우 (예: total_revenue)
+      if (data.value !== undefined && !data.labels) {
+        return (
+          <div className='flex flex-col items-center justify-center h-64'>
+            <div className='text-4xl font-bold text-gray-900 mb-2'>
+              {typeof data.value === "number"
+                ? data.value.toLocaleString()
+                : data.value}
+            </div>
+            <div className='text-sm text-gray-500'>{chart.title}</div>
           </div>
-          <div className='text-sm text-gray-500'>{chart.title}</div>
+        );
+      }
+
+      // 다중 값인 경우 (예: signups_by_region)
+      if (data.labels && data.values) {
+        return (
+          <div className='h-64 p-4'>
+            <div className='text-lg font-semibold text-gray-900 mb-4 text-center'>
+              {chart.title}
+            </div>
+            <div className='grid grid-cols-1 gap-3'>
+              {data.labels.map((label: string, index: number) => (
+                <div
+                  key={index}
+                  className='flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100'
+                >
+                  <span className='text-sm font-medium text-gray-700'>
+                    {label}
+                  </span>
+                  <span className='text-xl font-bold text-gray-900'>
+                    {(data.values[index] || 0).toLocaleString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      // 기본 fallback
+      return (
+        <div className='flex items-center justify-center h-64 text-gray-500'>
+          No data available
         </div>
       );
     }
 
-    // bar, line 차트용 데이터 변환 - 변수명 변경
-    const formattedData: any =
-      data.labels?.map((label: string, index: number) => ({
+    // bar, line 차트용 데이터 변환
+    let formattedData: any = [];
+
+    // 데이터 구조에 따라 처리
+    if (data.labels && data.values) {
+      // 일반적인 경우: {labels: [], values: []}
+      formattedData = data.labels.map((label: string, index: number) => ({
         name: label,
-        value: data.values?.[index] || 0,
-      })) || [];
+        value: data.values[index] || 0,
+      }));
+    } else if (data.value && typeof data.value === "number") {
+      // 단일 값인 경우: {value: 123}
+      formattedData = [
+        {
+          name: chart.title,
+          value: data.value,
+        },
+      ];
+    } else {
+      // 기본 처리
+      formattedData = [];
+    }
 
     return (
       <Chart
         type={chart.type as "bar" | "line" | "number"}
-        data={formattedData} // 변경된 변수명 사용
+        data={formattedData}
         height={300}
         title={chart.title}
       />
@@ -138,15 +191,6 @@ export const DashboardDetailPresenter: React.FC<
               >
                 Back to Dashboard List
               </Button>
-              {/* {session && (
-                <Button
-                  variant='ghost'
-                  onClick={handleDeleteDashboard}
-                  className='text-red-600 hover:text-red-800 hover:bg-red-50'
-                >
-                  삭제
-                </Button>
-              )} */}
             </div>
           </div>
         </div>
