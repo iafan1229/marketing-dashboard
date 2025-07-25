@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Chart } from "@/components/ui/Chart";
 import { Dashboard, Chart as ChartType } from "@/types/api";
 import { NextRouter } from "next/router";
+import { Loading } from "@/components/ui/Loading";
 
 interface DashboardDetailPresenterProps {
   session: any;
@@ -64,7 +65,7 @@ export const DashboardDetailPresenter: React.FC<
 
     return (
       <Chart
-        type={chart.type as any}
+        type={chart.type as "bar" | "line" | "number"}
         data={formattedData} // 변경된 변수명 사용
         height={300}
         title={chart.title}
@@ -86,9 +87,7 @@ export const DashboardDetailPresenter: React.FC<
     return (
       <div className='min-h-screen bg-gray-50'>
         <Header />
-        <div className='flex items-center justify-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
-        </div>
+        <Loading />
       </div>
     );
   }

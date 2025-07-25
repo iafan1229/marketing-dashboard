@@ -2,8 +2,10 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ChartForm } from "@/components/ui/ChartForm";
+import { ErrorBox } from "@/components/ui/ErrorBox";
 import { Header } from "@/components/ui/Header";
 import { Input } from "@/components/ui/Input";
+import { Loading } from "@/components/ui/Loading";
 import { ChartFormData, DashboardCreateProps } from "@/types/app/chart";
 import { useRouter } from "next/navigation";
 
@@ -64,28 +66,7 @@ export const DashboardCreatePresenter: React.FC<DashboardCreateProps> = ({
             </p>
           </div>
 
-          {error && (
-            <div className='mb-6 p-4 bg-red-50 border border-red-200 rounded-md'>
-              <div className='flex'>
-                <div className='flex-shrink-0'>
-                  <svg
-                    className='h-5 w-5 text-red-400'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                  >
-                    <path
-                      fillRule='evenodd'
-                      d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
-                      clipRule='evenodd'
-                    />
-                  </svg>
-                </div>
-                <div className='ml-3'>
-                  <p className='text-sm text-red-700'>{error}</p>
-                </div>
-              </div>
-            </div>
-          )}
+          {error && <ErrorBox error={error} />}
 
           <form
             onSubmit={(e) => {
@@ -197,29 +178,7 @@ export const DashboardCreatePresenter: React.FC<DashboardCreateProps> = ({
                 className='bg-brand-purple hover:bg-brand-purple/90 disabled:opacity-50'
               >
                 {isLoading ? (
-                  <div className='flex items-center'>
-                    <svg
-                      className='animate-spin -ml-1 mr-3 h-4 w-4 text-white'
-                      xmlns='http://www.w3.org/2000/svg'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                    >
-                      <circle
-                        className='opacity-25'
-                        cx='12'
-                        cy='12'
-                        r='10'
-                        stroke='currentColor'
-                        strokeWidth='4'
-                      />
-                      <path
-                        className='opacity-75'
-                        fill='currentColor'
-                        d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-                      />
-                    </svg>
-                    Creating...
-                  </div>
+                  <Loading />
                 ) : (
                   `대시보드 생성 (${charts.length}개 차트)`
                 )}

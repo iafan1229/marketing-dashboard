@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Loading } from "@/components/ui/Loading";
 
 interface LoginPresenterProps {
   isLoading: boolean;
@@ -36,10 +37,7 @@ export function LoginPresenter({
           className='w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50'
         >
           {isLoading ? (
-            <div className='flex items-center justify-center'>
-              <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2'></div>
-              로그인 중...
-            </div>
+            <Loading />
           ) : (
             <div className='flex items-center justify-center'>
               <svg className='w-5 h-5 mr-2' viewBox='0 0 24 24'>

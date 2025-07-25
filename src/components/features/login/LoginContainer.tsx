@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LoginPresenter } from "./LoginPresenter";
 import { useLogin } from "./useLogin";
+import { Loading } from "@/components/ui/Loading";
 
 export function LoginContainer() {
   const { data: session, status } = useSession();
@@ -19,11 +20,7 @@ export function LoginContainer() {
   }, [status, session, router]);
 
   if (status === "loading") {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (session) {
