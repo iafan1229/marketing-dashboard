@@ -11,6 +11,8 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
+  AreaChart,
+  Area,
 } from "recharts";
 import { ChartType } from "@/types/app/chart";
 
@@ -184,7 +186,7 @@ export const Chart: React.FC<ChartProps> = ({
       case "area":
         return (
           <ResponsiveContainer width='100%' height={height}>
-            <LineChart data={chartData}>
+            <AreaChart data={chartData}>
               <defs>
                 <linearGradient id='areaGradient' x1='0' y1='0' x2='0' y2='1'>
                   <stop offset='5%' stopColor='#7fdccb' stopOpacity={0.3} />
@@ -196,7 +198,7 @@ export const Chart: React.FC<ChartProps> = ({
                 stroke='#f3f4f6'
                 vertical={false}
               />
-              <Line
+              <Area
                 type='monotone'
                 dataKey='value'
                 stroke='#7fdccb'
@@ -212,20 +214,8 @@ export const Chart: React.FC<ChartProps> = ({
               />
               <XAxis dataKey='name' {...xAxisProps} />
               <YAxis {...yAxisProps} />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
-        );
-
-      case "metric":
-        return (
-          <div className='flex flex-col items-center justify-center h-full'>
-            <div className='text-3xl font-bold text-gray-900 mb-2'>
-              {typeof value === "number"
-                ? `${value.toLocaleString()}${unit}`
-                : value}
-            </div>
-            {title && <div className='text-sm text-gray-500'>{title}</div>}
-          </div>
         );
 
       default:

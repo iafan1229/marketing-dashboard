@@ -132,7 +132,10 @@ export const handlers = [
       );
     }
 
-    if (!body.type || !["bar", "line", "number"].includes(body.type)) {
+    if (
+      !body.type ||
+      !["bar", "line", "number", "pie", "area"].includes(body.type)
+    ) {
       return HttpResponse.json(
         {
           error: "Chart type is required and must be one of: bar, line, number",
