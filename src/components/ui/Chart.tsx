@@ -95,23 +95,6 @@ export const Chart: React.FC<ChartProps> = ({
     },
     // height: 45, // X축 레이블 때문에 높이 증가
     // X축 레이블 추가
-    label: xAxisLabel
-      ? {
-          value: xAxisLabel,
-          position: "insideBottom",
-          offset: -5,
-          style: {
-            textAnchor: "middle",
-            fontSize: "12px",
-            fill: "#6b7280",
-            fontWeight: 600,
-            // position: "absolute", // 절대 위치
-            // bottom: "10px", // 하단에서 10px
-            // left: "50%", // 가로 중앙
-            // transform: "translateX(-50%)", // 중앙 정렬
-          },
-        }
-      : undefined,
   };
 
   const renderChart = () => {
@@ -120,16 +103,7 @@ export const Chart: React.FC<ChartProps> = ({
         return (
           <>
             <ResponsiveContainer width='100%' height={height}>
-              <LineChart
-                data={chartData}
-                // width={512}
-                margin={{
-                  top: 10,
-                  right: 10,
-                  // left: yAxisLabel ? 20 : 10, // 레이블이 있으면 여백 증가
-                  bottom: xAxisLabel ? 20 : 10,
-                }}
-              >
+              <LineChart data={chartData}>
                 {/* 격자 추가 (선택사항) */}
                 <CartesianGrid
                   strokeDasharray='3 3'
@@ -159,15 +133,7 @@ export const Chart: React.FC<ChartProps> = ({
       case "bar":
         return (
           <ResponsiveContainer width='100%' height={height}>
-            <BarChart
-              data={chartData}
-              margin={{
-                top: 10,
-                right: 10,
-                // left: yAxisLabel ? 20 : 10,
-                bottom: xAxisLabel ? 20 : 10,
-              }}
-            >
+            <BarChart data={chartData}>
               {/* 격자 추가 (선택사항) */}
               <CartesianGrid
                 strokeDasharray='3 3'
@@ -218,15 +184,7 @@ export const Chart: React.FC<ChartProps> = ({
       case "area":
         return (
           <ResponsiveContainer width='100%' height={height}>
-            <LineChart
-              data={chartData}
-              margin={{
-                top: 10,
-                right: 10,
-                // left: yAxisLabel ? 20 : 10,
-                bottom: xAxisLabel ? 20 : 10,
-              }}
-            >
+            <LineChart data={chartData}>
               <defs>
                 <linearGradient id='areaGradient' x1='0' y1='0' x2='0' y2='1'>
                   <stop offset='5%' stopColor='#7fdccb' stopOpacity={0.3} />
