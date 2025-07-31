@@ -120,8 +120,11 @@ export const DashboardDetailPresenter: React.FC<
       <Chart
         type={chart.type as "bar" | "line" | "number"}
         data={formattedData}
-        height={300}
+        height={400}
         title={chart.title}
+        // 이 부분 추가
+        xAxisLabel='Date'
+        yAxisLabel='Count'
       />
     );
   };
@@ -178,8 +181,8 @@ export const DashboardDetailPresenter: React.FC<
               <div className='flex items-center space-x-4 text-sm text-gray-500'>
                 <span>생성일: {formatDate(dashboard.createdAt)}</span>
                 <span>•</span>
-                <span>수정일: {formatDate(dashboard.updatedAt)}</span>
-                <span>•</span>
+                {/* <span>수정일: {formatDate(dashboard.updatedAt)}</span> */}
+                {/* <span>•</span> */}
                 <span>{charts.length}개의 차트</span>
               </div>
             </div>
@@ -208,7 +211,7 @@ export const DashboardDetailPresenter: React.FC<
             )}
           </Card>
         ) : (
-          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6'>
             {charts.map((chart) => (
               <Card
                 key={chart.id}
