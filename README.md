@@ -1,6 +1,6 @@
 # 대시보드 빌더
 
-인터랙티브 차트로 대시보드를 쉽게 만들 수 있는 웹 애플리케이션입니다.
+차트를 직접 선택하여 대시보드를 쉽게 만들 수 있는 웹 애플리케이션입니다.
 
 ## 🌐 데모
 
@@ -19,6 +19,12 @@
 ### 대시보드 상세 보기
 
 ![대시보드 상세 보기](https://postfiles.pstatic.net/MjAyNTA3MzFfMjgg/MDAxNzUzOTQwNDQzNDA5.VtO4x7dmTqyrqwR8UHRcgWo8-beNhu9glI1siDmZOSIg.y6kHOjl4DujsnqT8bY3HbaMc0Vsqacc8u8mMm5Vogicg.PNG/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2025-07-31_%EC%98%A4%ED%9B%84_12.50.26.png?type=w773)
+
+## 소개
+
+Next.js와 TypeScript로 구축된 인터랙티브 차트 대시보드 생성 도구입니다.
+구글 로그인으로 간편하게 시작하여 막대/선/숫자/파이/영역 차트를 조합한 나만의 대시보드를 만들어보세요.
+아토믹 디자인 패턴을 적용한 확장 가능한 아키텍처로 개발되었으며, Tailwind CSS와 Recharts를 활용한 반응형 UI를 제공합니다.
 
 ## 🎨 핵심 특징
 
