@@ -14,11 +14,11 @@
 
 ### 대시보드 목록
 
-![대시보드 목록](https://postfiles.pstatic.net/MjAyNTA3MjRfMjM0/MDAxNzUzMzMwNTQzMzc2.3nM-ziO8OzwSWceogv6OWpiZKTXT2pfxAW2d68LQV1Qg.VczoouMw_IqPToMjs4Mj_MCimWXRk_kGGtvrL3CdY_sg.PNG/2.png?type=w3840)
+![대시보드 목록](https://postfiles.pstatic.net/MjAyNTA3MzFfMTE2/MDAxNzUzOTQwNDM5ODcy.4mecPYSORwSpRYk5_ZOc2pSthBSyyPxzFU7W4UalrhAg.bJEWrS4MZ5wdXICZB-OYZHbRVN1J9Vjc-V_7LQmPiCwg.PNG/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2025-07-31_%EC%98%A4%ED%9B%84_12.49.56.png?type=w773)
 
 ### 대시보드 상세 보기
 
-![대시보드 상세 보기](https://postfiles.pstatic.net/MjAyNTA3MjRfMjM0/MDAxNzUzMzMwNTQzMzgz.zi6Sb7girqjzISYhgc-CRR5B8AI7J5VPsdbw4QRqYBog.peXpLScUbPsQ5t3bhcUcJw6lbAOET2NBVuqLWw2-oo4g.PNG/3.png?type=w3840)
+![대시보드 상세 보기](https://postfiles.pstatic.net/MjAyNTA3MzFfMjgg/MDAxNzUzOTQwNDQzNDA5.VtO4x7dmTqyrqwR8UHRcgWo8-beNhu9glI1siDmZOSIg.y6kHOjl4DujsnqT8bY3HbaMc0Vsqacc8u8mMm5Vogicg.PNG/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2025-07-31_%EC%98%A4%ED%9B%84_12.50.26.png?type=w773)
 
 ## 🎨 핵심 특징
 
