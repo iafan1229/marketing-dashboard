@@ -6,8 +6,7 @@ export type ChartType =
   | "area"
   | "donut"
   | "radar"
-  | "scatter"
-  | "metric";
+  | "scatter";
 
 export interface ChartFormData {
   title: string;
@@ -24,7 +23,7 @@ export interface MockApiOption {
 }
 
 export interface ChartTypeOption {
-  value: "bar" | "line" | "number";
+  value: "bar" | "line" | "number" | "pie" | "area";
   label: string;
 }
 
@@ -73,4 +72,6 @@ export const CHART_TYPE_OPTIONS: ChartTypeOption[] = [
   { value: "bar", label: "Bar Chart" },
   { value: "line", label: "Line Chart" },
   { value: "number", label: "Number/Metric" },
+  { value: "pie", label: "Pie Chart" },
+  { value: "area", label: "Area Chart" },
 ];

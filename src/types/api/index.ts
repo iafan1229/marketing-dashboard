@@ -11,7 +11,7 @@ export interface Dashboard {
 export interface Chart {
   id: string;
   dashboardId: string;
-  type: "bar" | "line" | "number";
+  type: "bar" | "line" | "number" | "pie" | "area";
   title: string;
   dataEndpoint: string;
   order: number;
